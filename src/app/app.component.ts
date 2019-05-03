@@ -11,7 +11,7 @@ export interface Task {
   title: string;
   description: string;
   id: string;
-  url: string;
+  url: {path: string, method: 'get' | 'post', data?: any};
 }
 
 @Component({
@@ -20,6 +20,7 @@ export interface Task {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  public json = [{password: 'cmd123'}];
   result = '';
   selected: Task;
   constructor(private http: HttpClient) {
@@ -35,13 +36,13 @@ export class AppComponent {
           id: 'first-task',
           title: 'Text Area',
           description: 'This is my first task',
-          url: 'textarea'
+          url: {path: 'textarea', method: 'get'}
         },
         {
-          id: 'first-task',
-          title: 'Text Area',
+          id: 'password',
+          title: 'Password',
           description: 'This is my first task',
-          url: 'textarea'
+          url: {path: 'password', method: 'post', data: this.json[0]}
         }
       ]
     },
@@ -85,8 +86,13 @@ export class AppComponent {
   }
 
   getXml(task: Task) {
-    if (task && task.url) {
-      this.http.get('/api/textarea', { responseType: 'text' }).subscribe((resp: any) => {
+    if (task && task.url && task.url.method === 'get') {
+      this.http.get('/api/' + task.url.path, { responseType: 'text' }).subscribe((resp: any) => {
+        this.result = resp;
+      });
+    }
+    if (task && task.url && task.url.method === 'post') {
+      this.http.post('/api/' + task.url.path, task.url.data,{ responseType: 'text' }).subscribe((resp: any) => {
         this.result = resp;
       });
     }
