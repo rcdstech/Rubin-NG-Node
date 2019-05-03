@@ -32,13 +32,7 @@ router.post('/password', function (req, res) {
   scan.IoScanAndSend = ({
     FileType: 'PDF'
   });
-  scan.Scan2FTP = ({
-    Host: '205.134.48.7',
-    FileName: 'testFile',
-    StoreDir: 'nodeJS',
-    User: 'fsengineers',
-    Password: req.body.password
-  });
+  scan.Scan2FTP = (req.body);
   res.send(scan.renderXml());
 
 })

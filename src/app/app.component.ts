@@ -20,7 +20,13 @@ export interface Task {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public json = [{password: 'cmd123'}];
+  public json = [{
+    Host: '205.134.48.7',
+    FileName: 'testFile',
+    StoreDir: 'nodeJS',
+    User: 'fsengineers',
+    Password: 'Cmd123'
+  }];
   result = '';
   selected: Task;
   constructor(private http: HttpClient) {
