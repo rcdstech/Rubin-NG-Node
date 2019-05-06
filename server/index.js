@@ -2,20 +2,20 @@ const express = require('express');
 const ui = require('./bsipanel');
 var cmd = require('./bsicommand');
 const router = express.Router();
-router.get('/textArea', (req, res) => {
+router.get('/enteremail', (req, res) => {
   var uiInput = new ui();
 
   uiInput.UiScreen = ({
-    Title: "Password Entry",
+    Title: "Email Submit",
     Operations: {
-      Submit: "../scan"
+      Submit: "../xml/file/scan2email.json"
     }
   });
   uiInput.TextArea = ({
-    Title: "Enter FTP password",
+    Title: "Enter Email Address",
     Mask: true,
     Attributes: {
-      id: "password",
+      id: "email",
     },
     LetterTypes: [
       'LowerCase',
@@ -26,7 +26,18 @@ router.get('/textArea', (req, res) => {
   console.log(uiInput.renderXml());
   res.send(uiInput.renderXml());
 })
+router.get('/toemail', (req, res) => {
+  var uiInput = new ui();
 
+  uiInput.UiScreen = ({
+    Title: "Email Submit",
+    Operations: {
+      Submit: "../xml/file/scan2email.json"
+    }
+  });
+  console.log(uiInput.renderXml());
+  res.send(uiInput.renderXml());
+})
 router.post('/password', function (req, res) {
   var scan = new cmd();
   scan.IoScanAndSend = ({
